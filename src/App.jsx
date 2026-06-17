@@ -1,5 +1,6 @@
 import React from 'react'
 import Hero from './sections/Hero'
+import Problem from './sections/Problem'
 import Features from './sections/Features'
 import Curriculum from './sections/Curriculum'
 import Pricing from './sections/Pricing'
@@ -43,6 +44,7 @@ function App() {
 
       <div className="relative z-10">
         <Hero />
+        <Problem />
         <Features />
         <Methodology />
         <Curriculum />

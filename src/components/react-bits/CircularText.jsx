@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const CircularText = ({
-    text = 'RESINA EXPRESS • ',
+    text = 'RESINA MASTER PRO • ',
     radius = 100,
     fontSize = '18px',
     color = '#00D1FF',

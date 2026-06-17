@@ -13,7 +13,7 @@ const Methodology = () => {
     const points = [
         "El curso es online y puedes verlo desde tu celular, tablet o computadora las veces que necesites 24/7. Incluso sin internet.",
         "Certificado personalizado descargable avalado por Andrea Bolívar - Artista y Fundadora del programa.",
-        "Es una inversión única y tienes acceso ilimitado PARA TODA LA VIDA. Programa con 58 clases y con actualizaciones futuras en video de alta definición (HD).",
+        "Es una inversión única y tienes acceso ilimitado PARA TODA LA VIDA. Programa con 23 módulos paso a paso y con actualizaciones futuras en video de alta definición (HD).",
         "Créeme que tu vida cambiará al aplicar esta capacitación y tus resultados crecerán, ya es tiempo de que sientas TOTAL FELICIDAD Y ORGULLO POR TI.",
         "Aprenderás a realizar las técnicas correctas del mundo de la resina epóxica desde la comodidad de tu casa.",
         "Además de ahorrar podrás generar ingresos extras creando piezas de arte únicas y profesionales.",
@@ -38,7 +38,7 @@ const Methodology = () => {
                         whileInView={{ opacity: 1 }}
                         className="text-gray-400 text-lg md:text-xl"
                     >
-                        Hemos desarrollado una <span className="text-white font-bold">Variedad de Técnicas</span> y creamos una capacitación catalogada como una de las más <span className="text-white font-bold">completas del mercado</span>, con 12 módulos y 58 clases virtuales.
+                        Hemos desarrollado una <span className="text-white font-bold">Variedad de Técnicas</span> y creamos una capacitación catalogada como una de las más <span className="text-white font-bold">completas del mercado</span>, con 23 módulos detallados paso a paso.
                     </motion.p>
                 </div>
 

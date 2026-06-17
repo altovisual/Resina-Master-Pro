@@ -38,7 +38,7 @@ const Recap = () => {
 
     const points = [
         "Aprenderás a tu propio ritmo, sin presiones y en tan solo 15 días obtendrás resultados increíbles.",
-        "Nuestro programa cuenta con 58 clases para que logres el objetivo de ser una experta en el mundo de la resina epóxica.",
+        "Nuestro programa cuenta con 23 módulos detallados paso a paso para que logres el objetivo de ser una experta en el mundo de la resina epóxica.",
         "Contamos con una guía con el paso a paso que te ayudará a hacer más fácil tu proceso de aprendizaje.",
         "Garantía de satisfacción de 7 días. Si nuestro programa no cumple tus expectativas, te devolvemos el dinero."
     ];
@@ -77,7 +77,7 @@ const Recap = () => {
                                 {/* Certificado (Frente / Superpuesto) */}
                                 <img
                                     src="/Resina Express (1).jpg.jpeg"
-                                    alt="Resina Express Certificado"
+                                    alt="Resina Master Pro Certificado"
                                     className="absolute -bottom-12 -left-4 w-[55%] h-auto object-cover rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] z-10 border border-white/20"
                                     style={{ 
                                         transform: 'translateZ(40px) rotate(-4deg)'
@@ -134,7 +134,7 @@ const Recap = () => {
                     <div className="order-1 lg:order-2">
                         <div className="mb-10">
                             <p className="text-gray-400 text-lg md:text-xl leading-relaxed">
-                                <span className="text-white font-black">Resina Express</span> es el programa más completo del mercado con el que podrás afianzar tus conocimientos y emprender en el área de la <span className="text-primary italic font-bold">Resina Epóxica</span>.
+                                <span className="text-white font-black">Resina Master Pro</span> es el programa más completo del mercado con el que podrás afianzar tus conocimientos y emprender en el área de la <span className="text-primary italic font-bold">Resina Epóxica</span>.
                             </p>
                         </div>
 

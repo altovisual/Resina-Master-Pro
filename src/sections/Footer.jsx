@@ -6,7 +6,7 @@ const Footer = () => {
             <div className="max-w-4xl mx-auto">
                 <div className="text-gray-400 text-[10px] md:text-xs tracking-wide space-y-6">
                     <p className="font-semibold">
-                        © 2025 – Resina Express | Todos los derechos reservados | <a href="#" className="underline hover:text-primary transition-colors">Políticas de Privacidad</a>
+                        © 2025 – Resina Master Pro | Todos los derechos reservados | <a href="#" className="underline hover:text-primary transition-colors">Políticas de Privacidad</a>
                     </p>
 
                     <div className="max-w-3xl mx-auto opacity-40 leading-relaxed uppercase">

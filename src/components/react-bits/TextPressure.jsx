@@ -2,7 +2,7 @@ import { useMemo, useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const TextPressure = ({
-    text = 'Resina Express',
+    text = 'Resina Master Pro',
     fontFamily = 'serif',
     fontSize = 'clamp(2rem, 8vw, 5rem)',
     fontWeight = 400,

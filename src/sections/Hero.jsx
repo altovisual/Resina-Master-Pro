@@ -53,14 +53,14 @@ const Hero = () => {
                         colors={["#ffffff", "#00FFBB", "#00CC96", "#00FFBB", "#ffffff"]}
                         animationSpeed={6}
                         showBorder={false}
-                        className="text-4xl md:text-6xl lg:text-8xl font-black italic uppercase tracking-tighter block drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)] md:drop-shadow-none"
+                        className="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter block drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)] md:drop-shadow-none"
                     >
-                        Resina Express
+                        Resina Master Pro
                     </GradientText>
 
                     <div className="flex justify-center md:justify-start mt-4">
                         <SplitText
-                            text="Tu inicio rapido y rentable"
+                            text="El método definitivo paso a paso"
                             className="text-base md:text-2xl lg:text-3xl font-bold text-white tracking-tight leading-snug mb-4 drop-shadow-md md:drop-shadow-none"
                         />
                     </div>
@@ -73,7 +73,7 @@ const Hero = () => {
                         transition={{ delay: 0.4 }}
                         className="text-white/90 md:text-gray-200 text-sm md:text-lg lg:text-xl mb-10 leading-relaxed font-medium drop-shadow-md md:drop-shadow-none max-w-lg"
                     >
-                        Domina la técnica, crea productos rentables y genera tus primeras ganancias en menos de 15 días con un método diseñado para emprender en este maravilloso mundo de la resina.
+                        El método completo de 23 módulos paso a paso para que domines la técnica, crees productos altamente rentables y generes tus primeras ganancias en menos de 15 días.
                     </motion.p>
 
                     <div className="flex flex-col sm:flex-row gap-6 items-center">

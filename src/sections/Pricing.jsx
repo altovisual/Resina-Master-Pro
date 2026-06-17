@@ -49,7 +49,8 @@ const Pricing = () => {
 
                                     <div className="flex items-start justify-center mb-6">
                                         <span className="text-2xl md:text-3xl font-bold mt-2">$</span>
-                                        <span className="text-7xl md:text-8xl font-black tracking-tighter leading-none">47</span>
+                                        <span className="text-7xl md:text-8xl font-black tracking-tighter leading-none">119</span>
+                                        <span className="text-3xl md:text-4xl font-black tracking-tighter leading-none self-start mt-2">.99</span>
                                         <span className="text-xl md:text-2xl font-bold self-end mb-2 ml-2">USD</span>
                                     </div>
 

@@ -42,7 +42,7 @@ const Features = () => {
                     className="absolute text-[10vw] font-black whitespace-nowrap rotate-[15deg] text-primary uppercase"
                     style={{ width: "200%" }}
                 >
-                    {"RESINA EXPRESS • TÉCNICAS PROFESIONALES • ARTE ÚNICO • ".repeat(5)}
+                    {"RESINA MASTER PRO • TÉCNICAS PROFESIONALES • ARTE ÚNICO • ".repeat(5)}
                 </motion.div>
 
             </div>

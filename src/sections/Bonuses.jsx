@@ -41,7 +41,7 @@ const Bonuses = () => {
                                     ¡GRATIS!
                                 </span>
                                 <span className="text-xs text-white uppercase tracking-widest mt-1 opacity-80 font-medium">
-                                    con la compra de <br /> <span className="text-primary font-bold">Resina Express</span>
+                                    con la compra de <br /> <span className="text-primary font-bold">Resina Master Pro</span>
                                 </span>
                             </div>
                         </motion.div>
