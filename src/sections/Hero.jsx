@@ -3,10 +3,10 @@ import SplitText from '../components/react-bits/SplitText';
 import Magnet from '../components/react-bits/Magnet';
 import GradientText from '../components/react-bits/GradientText';
 import { motion } from 'framer-motion';
-import bgHero from '../assets/4.png';
-import bgMobile from '../assets/6.png';
-import solapeImg from '../assets/solape.png';
-import celImg from '../assets/cel.png';
+import bgHero from '../assets/4.webp';
+import bgMobile from '../assets/6.webp';
+import solapeImg from '../assets/solape.webp';
+import celImg from '../assets/cel.webp';
 import { Zap } from 'lucide-react';
 
 const Hero = () => {
@@ -19,11 +19,13 @@ const Hero = () => {
                     src={bgHero}
                     alt="Background Desktop"
                     className="hidden md:block w-full h-full object-cover opacity-100 scale-105"
+                    fetchpriority="high"
                 />
                 <img
                     src={bgMobile}
                     alt="Background Mobile"
                     className="block md:hidden w-full h-[65vh] object-cover opacity-100 object-[center_top]"
+                    fetchpriority="high"
                 />
 
                 {/* Degradados de oscurecimiento */}
@@ -35,12 +37,14 @@ const Hero = () => {
                     src={solapeImg}
                     alt="Sujeto Solape Desktop"
                     className="absolute inset-0 w-full h-full object-cover z-10 scale-105 pointer-events-none hidden md:block"
+                    fetchpriority="high"
                 />
                 {/* Capa de Solape (Sujeto con iluminación original) - Mobile */}
                 <img
                     src={celImg}
                     alt="Sujeto Solape Mobile"
                     className="absolute top-0 w-full h-[65vh] object-cover z-10 pointer-events-none block md:hidden object-[center_top]"
+                    fetchpriority="high"
                 />
             </div>
 

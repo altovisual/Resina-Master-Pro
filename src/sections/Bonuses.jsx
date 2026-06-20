@@ -1,11 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import boxMascotas from '../assets/bonos/box (1).png';
-import boxLogo from '../assets/bonos/box (2).png';
-import boxMoldes from '../assets/bonos/box (4).png';
-import boxNFC from '../assets/bonos/box (5).png';
-import boxTaza from '../assets/bonos/box (6).png';
-import boxBebe from '../assets/bonos/BOX (7).jpg';
+import boxMascotas from '../assets/bonos/box (1).webp';
+import boxLogo from '../assets/bonos/box (2).webp';
+import boxMoldes from '../assets/bonos/box (4).webp';
+import boxNFC from '../assets/bonos/box (5).webp';
+import boxTaza from '../assets/bonos/box (6).webp';
+import boxBebe from '../assets/bonos/BOX (7).webp';
 
 const bonuses = [
     { img: boxLogo, alt: "Bono 1", title: "Diseña tu Logo desde Cero", price: "35" },
@@ -41,6 +41,7 @@ const Bonuses = () => {
                                     src={b.img}
                                     alt={b.alt}
                                     className="max-w-full max-h-full object-contain hover:scale-105 transition-transform duration-300"
+                                    loading="lazy"
                                 />
                             </div>
                             <div className="flex flex-col items-center text-center px-4 w-full">

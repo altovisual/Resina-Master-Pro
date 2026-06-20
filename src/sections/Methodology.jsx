@@ -77,6 +77,7 @@ const Methodology = () => {
                                     exit={{ opacity: 0, scale: 0.95 }}
                                     transition={{ duration: 0.8, ease: "easeInOut" }}
                                     className="absolute inset-0 w-full h-full object-cover"
+                                    loading="lazy"
                                 />
                             </AnimatePresence>
                             {/* Overlay degradado sutil en la parte inferior */}

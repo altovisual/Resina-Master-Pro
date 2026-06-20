@@ -104,6 +104,7 @@ const Portfolio = () => {
                                             src={project.img} 
                                             alt={project.title}
                                             className="w-full h-[300px] md:h-[380px] object-cover transition-transform duration-700 group-hover:scale-105"
+                                            loading="lazy"
                                         />
                                         
                                         {/* Insignia de Calidad */}

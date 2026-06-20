@@ -4,7 +4,7 @@ import SplitText from '../components/react-bits/SplitText';
 import TextPressure from '../components/react-bits/TextPressure';
 import GradientText from '../components/react-bits/GradientText';
 import TiltedCard from '../components/react-bits/TiltedCard';
-import instructorImg from '../assets/55.png';
+import instructorImg from '../assets/55.webp';
 
 const Instructor = () => {
     return (
@@ -20,6 +20,7 @@ const Instructor = () => {
                             src={instructorImg}
                             alt="Instructora"
                             className="w-full h-auto rounded-3xl"
+                            loading="lazy"
                         />
                     </TiltedCard>
                 </motion.div>

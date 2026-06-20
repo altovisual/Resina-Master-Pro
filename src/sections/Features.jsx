@@ -71,6 +71,7 @@ const Features = () => {
                                     src={f.img} 
                                     alt={f.title} 
                                     className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-500" 
+                                    loading="lazy"
                                 />
                                 <div className="absolute inset-0 bg-primary/10 group-hover:bg-transparent transition-colors duration-500 z-0 pointer-events-none" />
                                 <div className="absolute inset-0 flex items-center justify-center z-10">
