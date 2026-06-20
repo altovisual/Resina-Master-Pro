@@ -1,13 +1,17 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 import GradientText from '../components/react-bits/GradientText';
 import Magnet from '../components/react-bits/Magnet';
 
-// Importar imágenes locales
-import trabajo1 from '../assets/trabajos_Recina (1).jpg';
-import trabajo2 from '../assets/trabajos_Recina (2).jpg';
-import trabajo3 from '../assets/trabajos_Recina (3).jpg';
+// Importación específica de las imágenes solicitadas por el usuario
+import photo30 from '../assets/portfolio/photo_30_2026-06-11_10-11-38.jpg';
+import photo1 from '../assets/portfolio/photo_1_2026-06-11_10-08-09.jpg';
+import photo23 from '../assets/portfolio/photo_23_2026-06-11_10-11-38.jpg';
+
+// Importación dinámica de todas las imágenes en la carpeta de portfolio usando Vite glob
+const imagesGlob = import.meta.glob('../assets/portfolio/*.jpg', { eager: true });
+const portfolioImages = Object.keys(imagesGlob).map(path => imagesGlob[path].default);
 
 const Methodology = () => {
     const points = [
@@ -19,6 +23,23 @@ const Methodology = () => {
         "Además de ahorrar podrás generar ingresos extras creando piezas de arte únicas y profesionales.",
         "Aprenderás a tu propio ritmo, sin presiones y de una forma fácil y rápida."
     ];
+
+    const [currentImg, setCurrentImg] = useState(0);
+    const slideshowImages = [
+        photo23,            // Primera imagen solicitada por el usuario
+        photo1,             // Segunda imagen solicitada por el usuario
+        portfolioImages[3], // Libreta/Cuaderno (Agenda)
+        portfolioImages[4], // Posavasos
+        portfolioImages[5], // Llaveros de letras
+        photo30,            // Imagen agregada a petición del usuario
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentImg((prev) => (prev + 1) % slideshowImages.length);
+        }, 4000);
+        return () => clearInterval(interval);
+    }, [slideshowImages.length]);
 
     return (
         <section className="py-24 bg-black px-4 relative overflow-hidden">
@@ -43,50 +64,39 @@ const Methodology = () => {
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
-                    {/* Cuadrícula de Imágenes Bento Grid Premium */}
-                    <div className="w-full lg:w-1/2">
-                        <div className="grid grid-cols-2 gap-6 h-[550px]">
-                            {/* Imagen Principal (Ocupa el lado izquierdo) */}
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.95 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                className="row-span-2 rounded-[2.5rem] overflow-hidden border border-white/20 relative group bg-gray-900"
-                            >
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10 opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
-                                <img
-                                    src={trabajo2}
-                                    alt="Arte en Resina Profundo"
-                                    className="w-full h-full object-cover transition-all duration-700 scale-105 group-hover:scale-100"
+                    {/* Slideshow de Imagen Única (Framer Motion Cross-fade) */}
+                    <div className="w-full lg:w-1/2 flex justify-center">
+                        <div className="relative w-full max-w-md h-[500px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(0,245,212,0.15)] bg-gray-900 group">
+                            <AnimatePresence mode="wait">
+                                <motion.img
+                                    key={currentImg}
+                                    src={slideshowImages[currentImg]}
+                                    alt="Mejores trabajos del portafolio"
+                                    initial={{ opacity: 0, scale: 1.05 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    exit={{ opacity: 0, scale: 0.95 }}
+                                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                                    className="absolute inset-0 w-full h-full object-cover"
                                 />
-                            </motion.div>
-
-                            {/* Imagen Superior Derecha */}
-                            <motion.div
-                                initial={{ opacity: 0, x: 30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.2 }}
-                                className="rounded-[2.5rem] overflow-hidden border border-white/20 relative group bg-gray-900 h-full"
-                            >
-                                <img
-                                    src={trabajo3}
-                                    alt="Joyería de Lujo"
-                                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 hover:scale-110"
-                                />
-                            </motion.div>
-
-                            {/* Imagen Inferior Derecha */}
-                            <motion.div
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.4 }}
-                                className="rounded-[2.5rem] overflow-hidden border border-white/20 relative group bg-gray-900 h-full"
-                            >
-                                <img
-                                    src={trabajo1}
-                                    alt="Mesa de Resina Arte"
-                                    className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-700 hover:scale-110"
-                                />
-                            </motion.div>
+                            </AnimatePresence>
+                            {/* Overlay degradado sutil en la parte inferior */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 pointer-events-none" />
+                            
+                            {/* Indicadores de diapositiva (Puntitos) */}
+                            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2.5 z-20 bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/5">
+                                {slideshowImages.map((_, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={() => setCurrentImg(idx)}
+                                        className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                                            idx === currentImg 
+                                                ? 'bg-primary scale-125 shadow-[0_0_8px_rgba(0,245,212,0.8)]' 
+                                                : 'bg-white/30 hover:bg-white/60'
+                                        }`}
+                                        aria-label={`Ir a imagen ${idx + 1}`}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </div>
 
@@ -102,7 +112,7 @@ const Methodology = () => {
                                     className="flex items-start gap-4"
                                 >
                                     <div className="mt-1 flex-shrink-0">
-                                        <CheckCircle2 className="w-6 h-6 text-green-500 fill-green-500/10" strokeWidth={2.5} />
+                                        <CheckCircle2 className="w-6 h-6 text-primary fill-primary/10" strokeWidth={2.5} />
                                     </div>
                                     <p className="text-gray-300 text-lg leading-relaxed">{text}</p>
                                 </motion.div>

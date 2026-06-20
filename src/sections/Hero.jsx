@@ -50,10 +50,11 @@ const Hero = () => {
                 <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left max-w-2xl md:mb-48 w-full mt-[50vh] sm:mt-40 md:mt-0 relative z-20 px-2">
 
                     <GradientText
-                        colors={["#ffffff", "#00FFBB", "#00CC96", "#00FFBB", "#ffffff"]}
+                        as="h1"
+                        colors={["#ffffff", "#00F5D4", "#00D2C4", "#00F5D4", "#ffffff"]}
                         animationSpeed={6}
                         showBorder={false}
-                        className="text-4xl md:text-6xl lg:text-7xl font-black italic uppercase tracking-tighter block drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)] md:drop-shadow-none"
+                        className="text-4xl md:text-6xl lg:text-7xl font-tanker font-black italic uppercase block drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)] md:drop-shadow-none"
                     >
                         Resina Master Pro
                     </GradientText>

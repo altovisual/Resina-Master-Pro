@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import LocomotiveScroll from 'locomotive-scroll'
 import Hero from './sections/Hero'
 import Problem from './sections/Problem'
-import Features from './sections/Features'
 import Curriculum from './sections/Curriculum'
 import Pricing from './sections/Pricing'
 import Instructor from './sections/Instructor'
@@ -13,21 +13,34 @@ import FAQ from './sections/FAQ'
 import Footer from './sections/Footer'
 import Portfolio from './sections/Portfolio'
 import GradualBlur from './components/react-bits/GradualBlur'
-import Noise from './components/react-bits/Noise'
-import TargetCursor from './components/react-bits/TargetCursor'
 import videoHero from './assets/video_hero.mp4'
 
 function App() {
+  useEffect(() => {
+    const locomotiveScroll = new LocomotiveScroll({
+      lenisOptions: {
+        wrapper: window,
+        content: document.documentElement,
+        lerp: 0.1,
+        duration: 1.2,
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        smoothTouch: false,
+        wheelMultiplier: 1,
+        touchMultiplier: 2,
+        normalizeWheel: true,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      }
+    });
+
+    return () => {
+      locomotiveScroll.destroy();
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen bg-black overflow-hidden font-sans relative">
-      <TargetCursor targetSelector=".cursor-target" />
-      <Noise
-        patternSize={140}
-        patternScaleX={2}
-        patternScaleY={2}
-        patternRefreshInterval={2}
-        patternAlpha={15}
-      />
+    <div className="min-h-screen bg-black overflow-x-hidden font-sans relative">
       {/* Desenfoque gradual fijo en el borde inferior */}
       <GradualBlur preset="page-footer" strength={8} height="15vh" />
 
@@ -45,7 +58,6 @@ function App() {
       <div className="relative z-10">
         <Hero />
         <Problem />
-        <Features />
         <Methodology />
         <Curriculum />
         <Instructor />

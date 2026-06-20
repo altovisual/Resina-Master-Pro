@@ -46,7 +46,7 @@ const Countdown = () => {
                         animate={{ x: [0, -1500] }}
                         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                         className="flex gap-12 text-[10rem] md:text-[15rem] font-black italic"
-                        style={{ WebkitTextStroke: '2px #00FFBB', color: 'transparent' }}
+                        style={{ WebkitTextStroke: '2px #00F5D4', color: 'transparent' }}
                     >
                         {[...Array(6)].map((_, i) => (
                             <span key={i}>OFERTA LIMITADA —</span>

@@ -2,9 +2,9 @@ import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { CheckCircle2, ShieldCheck } from 'lucide-react';
 import GradientText from '../components/react-bits/GradientText';
-import bono1 from '../assets/BONO1 RESINA.png';
-import bono2 from '../assets/BONO2 RESINA.png';
-import bono3 from '../assets/BONO3 RESINA.png';
+import bono1 from '../assets/bonos/box (1).png';
+import bono2 from '../assets/bonos/box (2).png';
+import bono3 from '../assets/bonos/box (4).png';
 
 const Recap = () => {
     // Variables para el efecto de Tilt 3D
@@ -68,7 +68,7 @@ const Recap = () => {
                             >
                                 {/* Portada del Curso (Fondo / Base para el tamaño) */}
                                 <img
-                                    src="/portada del curso.jpeg"
+                                    src="/PORTADA RESINA MASTER PRO.jpg"
                                     alt="Portada del Curso"
                                     className="w-[85%] relative -mt-6 h-auto object-cover rounded-2xl md:rounded-3xl shadow-[0_0_50px_rgba(0,255,187,0.2)] z-0 border border-white/10"
                                     style={{ transform: 'translateZ(-10px)' }}
@@ -95,7 +95,7 @@ const Recap = () => {
                                     viewport={{ once: true }}
                                     className="bg-primary text-black px-4 py-1.5 rounded-full text-[10px] md:text-xs font-black uppercase tracking-widest shadow-[0_4px_10px_rgba(0,0,0,0.5)] border border-primary/50 z-30 relative top-4 md:top-8"
                                 >
-                                    + 3 Bonos Gratis
+                                    + 6 Bonos Gratis
                                 </motion.div>
 
                                 <div className="flex flex-row justify-center items-end gap-2 sm:gap-4 w-full">

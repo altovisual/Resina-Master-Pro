@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TiltedCard from '../components/react-bits/TiltedCard';
-import { X } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Importación dinámica de todas las imágenes en la carpeta de portfolio usando Vite glob
 const imagesGlob = import.meta.glob('../assets/portfolio/*.jpg', { eager: true });
@@ -19,10 +19,39 @@ const projects = Object.keys(imagesGlob).map((path, index) => {
 
 const Portfolio = () => {
     const [showAll, setShowAll] = useState(false);
-    const [selectedImg, setSelectedImg] = useState(null);
+    const [selectedIndex, setSelectedIndex] = useState(null);
 
     // Si no se muestran todas, limitamos a 6 proyectos inicialmente para mejorar la carga inicial
     const visibleProjects = showAll ? projects : projects.slice(0, 6);
+
+    const handlePrev = (e) => {
+        if (e) e.stopPropagation();
+        setSelectedIndex((prevIndex) => 
+            prevIndex === 0 ? visibleProjects.length - 1 : prevIndex - 1
+        );
+    };
+
+    const handleNext = (e) => {
+        if (e) e.stopPropagation();
+        setSelectedIndex((prevIndex) => 
+            prevIndex === visibleProjects.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (selectedIndex === null) return;
+            if (e.key === 'ArrowLeft') {
+                handlePrev();
+            } else if (e.key === 'ArrowRight') {
+                handleNext();
+            } else if (e.key === 'Escape') {
+                setSelectedIndex(null);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [selectedIndex, visibleProjects]);
 
     return (
         <section className="py-24 bg-black relative overflow-hidden" id="portfolio">
@@ -67,7 +96,7 @@ const Portfolio = () => {
                                 <TiltedCard className="w-full h-full">
                                     <div 
                                         className="relative group overflow-hidden rounded-[2.5rem] shadow-2xl border border-white/5 h-full cursor-pointer bg-gray-950/40"
-                                        onClick={() => setSelectedImg(project.img)}
+                                        onClick={() => setSelectedIndex(index)}
                                     >
                                         <div className="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
                                         
@@ -123,30 +152,61 @@ const Portfolio = () => {
 
             {/* Lightbox / Modal de Imagen a Pantalla Completa */}
             <AnimatePresence>
-                {selectedImg && (
+                {selectedIndex !== null && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={() => setSelectedImg(null)}
-                        className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 bg-black/95 backdrop-blur-sm cursor-zoom-out"
+                        onClick={() => setSelectedIndex(null)}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 bg-black/95 backdrop-blur-md cursor-zoom-out"
                     >
-                        <motion.button 
-                            className="absolute top-6 right-6 md:top-10 md:right-10 text-white hover:text-primary transition-colors z-50 bg-black/50 p-2 rounded-full cursor-pointer"
-                            onClick={() => setSelectedImg(null)}
+                        {/* Botón Cerrar */}
+                        <button 
+                            className="absolute top-6 right-6 md:top-8 md:right-8 text-white hover:text-primary transition-all z-50 bg-black/60 p-3 rounded-full hover:scale-110 border border-white/10 hover:border-primary/50 shadow-lg cursor-pointer"
+                            onClick={() => setSelectedIndex(null)}
                         >
-                            <X size={32} />
-                        </motion.button>
-                        <motion.img
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.8, opacity: 0 }}
-                            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                            src={selectedImg}
-                            alt="Trabajo en detalle"
-                            className="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl cursor-default"
-                            onClick={(e) => e.stopPropagation()}
-                        />
+                            <X size={28} />
+                        </button>
+
+                        {/* Botón Anterior */}
+                        <button 
+                            className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white hover:text-primary transition-all z-50 bg-black/60 p-3 rounded-full hover:scale-110 border border-white/10 hover:border-primary/50 shadow-lg cursor-pointer"
+                            onClick={handlePrev}
+                        >
+                            <ChevronLeft size={36} />
+                        </button>
+
+                        {/* Contenedor e Imagen */}
+                        <div className="relative max-w-[90%] max-h-[80vh] md:max-h-[85vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
+                            <motion.img
+                                key={selectedIndex}
+                                initial={{ scale: 0.95, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                exit={{ scale: 0.95, opacity: 0 }}
+                                transition={{ duration: 0.25 }}
+                                src={visibleProjects[selectedIndex]?.img}
+                                alt={visibleProjects[selectedIndex]?.title}
+                                className="max-w-full max-h-[80vh] md:max-h-[85vh] object-contain rounded-2xl shadow-2xl select-none"
+                            />
+                        </div>
+
+                        {/* Botón Siguiente */}
+                        <button 
+                            className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white hover:text-primary transition-all z-50 bg-black/60 p-3 rounded-full hover:scale-110 border border-white/10 hover:border-primary/50 shadow-lg cursor-pointer"
+                            onClick={handleNext}
+                        >
+                            <ChevronRight size={36} />
+                        </button>
+
+                        {/* Info / Contador inferior */}
+                        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center z-50 bg-black/60 px-6 py-2.5 rounded-full border border-white/10 backdrop-blur-md flex flex-col items-center gap-0.5 select-none" onClick={(e) => e.stopPropagation()}>
+                            <p className="text-white font-bold text-sm tracking-wide">
+                                {visibleProjects[selectedIndex]?.title}
+                            </p>
+                            <p className="text-primary/70 text-xs font-semibold uppercase tracking-wider">
+                                {selectedIndex + 1} / {visibleProjects.length}
+                            </p>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

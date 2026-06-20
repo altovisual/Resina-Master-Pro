@@ -8,12 +8,16 @@ export default {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: '#00FFBB', // Turquesa esmeralda (más verde)
-                    dark: '#00CC96',
+                    DEFAULT: '#00F5D4', // Turquesa vibrante de la caja de bonos
+                    dark: '#00D2C4',
                 },
                 secondary: {
                     DEFAULT: '#FFD700', // Oro
                 }
+            },
+            fontFamily: {
+                tanker: ['Tanker', 'sans-serif'],
+                sans: ['DM Sans', 'sans-serif'],
             },
         },
     },

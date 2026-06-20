@@ -107,7 +107,7 @@ const AnimatedList = ({
 
     return (
         <div className={`scroll-list-container ${className}`}>
-            <div ref={listRef} className={`scroll-list ${!displayScrollbar ? 'no-scrollbar' : ''}`} onScroll={handleScroll}>
+            <div ref={listRef} className={`scroll-list ${!displayScrollbar ? 'no-scrollbar' : ''}`} onScroll={handleScroll} data-lenis-prevent>
                 {items.map((item, index) => {
                     const isItemObject = typeof item === 'object';
                     const title = isItemObject ? item.title : item;
