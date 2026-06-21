@@ -2,6 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ==============================================
+   FONT DISPLAY: evita FOUT usando swap
+   El browser muestra el fallback inmediatamente
+   y lo reemplaza cuando la fuente real carga.
+   Los fallbacks son elegidos para parecerse en métricas.
+   ============================================== */
+@font-face {
+  font-family: 'Bebas Neue';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Bebas Neue'), local('BebasNeue');
+}
+
+@font-face {
+  font-family: 'DM Sans';
+  font-style: normal;
+  font-weight: 100 1000;
+  font-display: swap;
+  src: local('DM Sans'), local('DMSans');
+}
+
 :root {
   background-color: black;
   color: white;
@@ -9,18 +31,33 @@
 
 body {
   margin: 0;
-  font-family: 'DM Sans', sans-serif;
+  /* Fallback: Impact es pesado/condensado como Tanker para los hítulos,
+     system-ui es el san-serif nativo del OS (DM Sans en espacio similar) */
+  font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6, .font-tanker {
-  font-family: 'Tanker', sans-serif !important;
+  font-family: 'Bebas Neue', Impact, 'Arial Black', sans-serif !important;
 }
 
 h1, h2, h3, .font-tanker {
-  letter-spacing: 0.06em !important;
+  /* Bebas Neue tiene buen tracking por defecto — reducir el letter-spacing extra */
+  letter-spacing: 0.04em !important;
 }
 
 .cursor-target, button, a {
   cursor: pointer;
+}
+
+/* Deshabilitar animaciones CSS pesadas en mobile (prefers-reduced-motion o coarse pointer) */
+@media (pointer: coarse) {
+  .animate-gradient-slow {
+    animation: none !important;
+    background-position: 0% 50% !important;
+  }
+  /* Deshabilitar el pulso del indicador de pago en Pricing */
+  .animate-pulse {
+    animation: none !important;
+  }
 }

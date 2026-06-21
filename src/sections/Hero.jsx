@@ -9,6 +9,9 @@ import solapeImg from '../assets/solape.webp';
 import celImg from '../assets/cel.webp';
 import { Zap } from 'lucide-react';
 
+// Detectar mobile una sola vez
+const isMobile = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
 const Hero = () => {
     return (
         <section className="relative w-full min-h-screen flex items-center md:items-end justify-center px-4 md:px-20 pt-20 pb-24 md:pb-0 bg-black">
@@ -72,14 +75,21 @@ const Hero = () => {
 
                     <div className="h-1 w-32 bg-primary mb-6 shadow-[0_0_15px_rgba(0,255,187,0.5)] mx-auto md:mx-0" />
 
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.4 }}
-                        className="text-white/90 md:text-gray-200 text-sm md:text-lg lg:text-xl mb-10 leading-relaxed font-medium drop-shadow-md md:drop-shadow-none max-w-lg"
-                    >
-                        El método completo de 23 módulos paso a paso para que domines la técnica, crees productos altamente rentables y generes tus primeras ganancias en menos de 15 días.
-                    </motion.p>
+                    {/* En mobile: párrafo estático (visible inmediatamente, sin animar) */}
+                    {isMobile ? (
+                        <p className="text-white/90 text-sm mb-10 leading-relaxed font-medium drop-shadow-md max-w-lg">
+                            El método completo de 23 módulos paso a paso para que domines la técnica, crees productos altamente rentables y generes tus primeras ganancias en menos de 15 días.
+                        </p>
+                    ) : (
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                            className="text-white/90 md:text-gray-200 text-sm md:text-lg lg:text-xl mb-10 leading-relaxed font-medium drop-shadow-md md:drop-shadow-none max-w-lg"
+                        >
+                            El método completo de 23 módulos paso a paso para que domines la técnica, crees productos altamente rentables y generes tus primeras ganancias en menos de 15 días.
+                        </motion.p>
+                    )}
 
                     <div className="flex flex-col sm:flex-row gap-6 items-center">
                         <Magnet padding={50} strength={3}>

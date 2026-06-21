@@ -16,8 +16,8 @@ export default {
                 }
             },
             fontFamily: {
-                tanker: ['Tanker', 'sans-serif'],
-                sans: ['DM Sans', 'sans-serif'],
+                tanker: ['Bebas Neue', 'Impact', 'sans-serif'],
+                sans: ['DM Sans', 'system-ui', '-apple-system', 'sans-serif'],
             },
         },
     },
