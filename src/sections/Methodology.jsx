@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 import GradientText from '../components/react-bits/GradientText';
 import Magnet from '../components/react-bits/Magnet';
@@ -84,19 +84,15 @@ const Methodology = () => {
                     {/* Slideshow de Imagen Única (Framer Motion Cross-fade) */}
                     <div className="w-full lg:w-1/2 flex justify-center">
                         <div className="relative w-full max-w-md h-[500px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_0_40px_rgba(0,245,212,0.15)] bg-gray-900 group">
-                            <AnimatePresence mode="wait">
-                                <motion.img
+                            {/* Imagen sin animación — cambia instantáneamente */}
+                                <img
                                     key={currentImg}
                                     src={slideshowImages[currentImg]}
                                     alt="Mejores trabajos del portafolio"
-                                    initial={{ opacity: 0, scale: 1.05 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    transition={{ duration: 0.8, ease: "easeInOut" }}
                                     className="absolute inset-0 w-full h-full object-cover"
                                     loading="lazy"
+                                    decoding="async"
                                 />
-                            </AnimatePresence>
                             {/* Overlay degradado sutil en la parte inferior */}
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10 pointer-events-none" />
                             
