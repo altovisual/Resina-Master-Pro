@@ -42,16 +42,21 @@ const Countdown = () => {
 
                 {/* Marquee Superior (UX Mejorado - Outline) */}
                 <div className="absolute top-0 left-0 w-full overflow-hidden whitespace-nowrap opacity-[0.07] pointer-events-none select-none z-0">
-                    <motion.div
-                        animate={{ x: [0, -1500] }}
-                        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                        className="flex gap-12 text-[10rem] md:text-[15rem] font-black italic"
+                    <div
+                        className="css-marquee-left gap-12 text-[10rem] md:text-[15rem] font-black italic"
                         style={{ WebkitTextStroke: '2px #00F5D4', color: 'transparent' }}
                     >
-                        {[...Array(6)].map((_, i) => (
-                            <span key={i}>OFERTA LIMITADA —</span>
-                        ))}
-                    </motion.div>
+                        <div className="flex gap-12">
+                            {[...Array(4)].map((_, i) => (
+                                <span key={i}>OFERTA LIMITADA —</span>
+                            ))}
+                        </div>
+                        <div className="flex gap-12">
+                            {[...Array(4)].map((_, i) => (
+                                <span key={i}>OFERTA LIMITADA —</span>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
                 <div className="mb-4 relative z-10">
@@ -101,16 +106,21 @@ const Countdown = () => {
 
                 {/* Marquee Inferior (UX Mejorado - Outline) */}
                 <div className="absolute bottom-0 left-0 w-full overflow-hidden whitespace-nowrap opacity-[0.04] pointer-events-none select-none z-0">
-                    <motion.div
-                        animate={{ x: [-1500, 0] }}
-                        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                        className="flex gap-12 text-[10rem] md:text-[15rem] font-black italic"
+                    <div
+                        className="css-marquee-right gap-12 text-[10rem] md:text-[15rem] font-black italic"
                         style={{ WebkitTextStroke: '1px #FFFFFF', color: 'transparent' }}
                     >
-                        {[...Array(6)].map((_, i) => (
-                            <span key={i}>ACCESO DE POR VIDA —</span>
-                        ))}
-                    </motion.div>
+                        <div className="flex gap-12">
+                            {[...Array(4)].map((_, i) => (
+                                <span key={i}>ACCESO DE POR VIDA —</span>
+                            ))}
+                        </div>
+                        <div className="flex gap-12">
+                            {[...Array(4)].map((_, i) => (
+                                <span key={i}>ACCESO DE POR VIDA —</span>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

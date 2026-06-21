@@ -39,16 +39,13 @@ const Features = () => {
     return (
         <section className="py-20 bg-black px-4 relative overflow-hidden">
             {/* Fondo en X */}
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] flex items-center justify-center">
-                <motion.div
-                    animate={{ x: ["0%", "-200%"] }}
-                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                    className="absolute text-[10vw] font-black whitespace-nowrap rotate-[15deg] text-primary uppercase"
-                    style={{ width: "200%" }}
-                >
-                    {"RESINA MASTER PRO • TÉCNICAS PROFESIONALES • ARTE ÚNICO • ".repeat(5)}
-                </motion.div>
-
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] flex items-center justify-center overflow-hidden">
+                <div className="absolute rotate-[15deg] w-[200%]">
+                    <div className="css-marquee-left text-[10vw] font-black text-primary uppercase gap-8">
+                        <div>{"RESINA MASTER PRO • TÉCNICAS PROFESIONALES • ARTE ÚNICO • ".repeat(5)}</div>
+                        <div>{"RESINA MASTER PRO • TÉCNICAS PROFESIONALES • ARTE ÚNICO • ".repeat(5)}</div>
+                    </div>
+                </div>
             </div>
 
             <div className="max-w-6xl mx-auto relative z-10">

@@ -72,6 +72,10 @@ function App() {
 
   return (
     <div className="min-h-screen bg-black overflow-x-hidden font-sans relative">
+      {/* Glows laterales */}
+      <div className="lateral-glow-left" />
+      <div className="lateral-glow-right" />
+
       {/* GradualBlur y Video: solo desktop */}
       {!isMobile && <GradualBlur preset="page-footer" strength={8} height="15vh" />}
       {!isMobile && <BackgroundVideo />}

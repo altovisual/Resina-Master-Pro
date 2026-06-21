@@ -35,15 +35,15 @@ const Methodology = () => {
     useEffect(() => {
         const load = async () => {
             if (cachedSlideshow) { setSlideshowImages(cachedSlideshow); return; }
-            const [p23, p1, p3, p4, p5, p30] = await Promise.all([
+            const [p23, p1, p3, p22, p5, p30] = await Promise.all([
                 loadImg('photo_23_2026-06-11_10-11-38'),
                 loadImg('photo_1_2026-06-11_10-08-09'),
                 loadImg('photo_3_'),
-                loadImg('photo_4_'),
+                loadImg('photo_22_2026-06-11_10-11-38'),
                 loadImg('photo_5_'),
                 loadImg('photo_30_2026-06-11_10-11-38'),
             ]);
-            const imgs = [p23, p1, p3, p4, p5, p30].filter(Boolean);
+            const imgs = [p23, p1, p3, p22, p5, p30].filter(Boolean);
             cachedSlideshow = imgs;
             setSlideshowImages(imgs);
         };

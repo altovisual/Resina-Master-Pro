@@ -71,3 +71,96 @@ h1, h2, h3, .font-tanker {
     transition-duration: 150ms !important;
   }
 }
+
+/* ================================================================
+   GLOWS LATERALES: Resplandor sutil en los bordes de la página
+   con los colores de la marca (#00F5D4 y #FFD700)
+   ================================================================ */
+.lateral-glow-left,
+.lateral-glow-right {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 40;
+  will-change: transform;
+}
+
+.lateral-glow-left {
+  left: 0;
+  width: 120px;
+  background: 
+    radial-gradient(ellipse at 0% 20%, rgba(0, 245, 212, 0.15), transparent 70%),
+    radial-gradient(ellipse at 0% 80%, rgba(255, 215, 0, 0.08), transparent 70%);
+}
+
+.lateral-glow-right {
+  right: 0;
+  width: 120px;
+  background: 
+    radial-gradient(ellipse at 100% 30%, rgba(255, 215, 0, 0.12), transparent 70%),
+    radial-gradient(ellipse at 100% 70%, rgba(0, 245, 212, 0.12), transparent 70%);
+}
+
+@media (min-width: 768px) {
+  .lateral-glow-left {
+    width: 300px;
+    background: 
+      radial-gradient(ellipse at 0% 20%, rgba(0, 245, 212, 0.22), transparent 70%),
+      radial-gradient(ellipse at 0% 80%, rgba(255, 215, 0, 0.15), transparent 70%);
+  }
+
+  .lateral-glow-right {
+    width: 300px;
+    background: 
+      radial-gradient(ellipse at 100% 30%, rgba(255, 215, 0, 0.20), transparent 70%),
+      radial-gradient(ellipse at 100% 70%, rgba(0, 245, 212, 0.18), transparent 70%);
+  }
+}
+
+/* ================================================================
+   MARQUEES FLUIDOS (CSS PURO): Alto rendimiento, acelerado por GPU
+   y compatible con mobile (sobreescribe reducedMotion de Framer)
+   ================================================================ */
+@keyframes marquee-left-anim {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marquee-right-anim {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.css-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-left-anim 35s linear infinite;
+  will-change: transform;
+}
+
+.css-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-right-anim 35s linear infinite;
+  will-change: transform;
+}
+
+@media (pointer: coarse) {
+  /* Excepción: Permitir la animación del marquee en mobile para que funcione */
+  .css-marquee-left,
+  .css-marquee-right {
+    animation-duration: 35s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
+
