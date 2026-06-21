@@ -1,8 +1,20 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+// Detectar mobile una sola vez al cargar (no cambia durante la sesión)
+const isMobile = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
+
 const SplitText = ({ text, className = "" }) => {
     const words = text.split(" ");
+
+    // En mobile: texto estático sin animaciones JS para máximo rendimiento
+    if (isMobile) {
+        return (
+            <span className={className}>
+                {text}
+            </span>
+        );
+    }
 
     return (
         <div className={`flex flex-wrap ${className}`}>

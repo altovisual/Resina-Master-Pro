@@ -1,39 +1,67 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import TiltedCard from '../components/react-bits/TiltedCard';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Importación dinámica de todas las imágenes en la carpeta de portfolio usando Vite glob
-const imagesGlob = import.meta.glob('../assets/portfolio/*.jpg', { eager: true });
+// Importación LAZY — las imágenes se cargan cuando el componente entra en viewport
+const imagesGlob = import.meta.glob('../assets/portfolio/*.jpg');
 
-// Convertimos las imágenes cargadas a nuestro array de proyectos de forma ordenada
-const projects = Object.keys(imagesGlob).map((path, index) => {
-    // Extraemos un identificador numérico o nombre para categorizarlos mejor si fuera necesario
-    return {
-        id: index + 1,
-        img: imagesGlob[path].default,
-        title: `Pieza de Arte #${index + 1}`,
-        category: index % 3 === 0 ? "Joyería" : index % 3 === 1 ? "Accesorios" : "Decoración"
-    };
-});
+// Cache para no recargar si el componente remonta
+let cachedProjects = null;
+
+const loadProjects = async () => {
+    if (cachedProjects) return cachedProjects;
+    const entries = await Promise.all(
+        Object.keys(imagesGlob).sort().map(async (path, index) => {
+            const mod = await imagesGlob[path]();
+            return {
+                id: index + 1,
+                img: mod.default,
+                title: `Pieza de Arte #${index + 1}`,
+                category: index % 3 === 0 ? "Joyería" : index % 3 === 1 ? "Accesorios" : "Decoración"
+            };
+        })
+    );
+    cachedProjects = entries;
+    return entries;
+};
 
 const Portfolio = () => {
+    const [projects, setProjects] = useState([]);
     const [showAll, setShowAll] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const sectionRef = useRef(null);
 
-    // Si no se muestran todas, limitamos a 6 proyectos inicialmente para mejorar la carga inicial
+    // Cargar imágenes cuando la sección entra en viewport (Intersection Observer)
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            async (entries) => {
+                if (entries[0].isIntersecting) {
+                    observer.disconnect();
+                    const data = await loadProjects();
+                    setProjects(data);
+                }
+            },
+            { rootMargin: '200px' } // pre-carga 200px antes de que llegue al viewport
+        );
+
+        if (sectionRef.current) observer.observe(sectionRef.current);
+        return () => observer.disconnect();
+    }, []);
+
+    // Si no se muestran todas, limitamos a 6 proyectos inicialmente
     const visibleProjects = showAll ? projects : projects.slice(0, 6);
 
     const handlePrev = (e) => {
         if (e) e.stopPropagation();
-        setSelectedIndex((prevIndex) => 
+        setSelectedIndex((prevIndex) =>
             prevIndex === 0 ? visibleProjects.length - 1 : prevIndex - 1
         );
     };
 
     const handleNext = (e) => {
         if (e) e.stopPropagation();
-        setSelectedIndex((prevIndex) => 
+        setSelectedIndex((prevIndex) =>
             prevIndex === visibleProjects.length - 1 ? 0 : prevIndex + 1
         );
     };
@@ -54,13 +82,13 @@ const Portfolio = () => {
     }, [selectedIndex, visibleProjects]);
 
     return (
-        <section className="py-24 bg-black relative overflow-hidden" id="portfolio">
+        <section ref={sectionRef} className="py-24 bg-black relative overflow-hidden" id="portfolio">
             {/* Fondo con brillo sutil */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(0,255,187,0.03),transparent_70%)] pointer-events-none" />
 
             <div className="max-w-6xl mx-auto px-4 relative z-10">
                 <div className="text-center mb-20">
-                    <motion.h2 
+                    <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -72,6 +100,7 @@ const Portfolio = () => {
                         initial={{ opacity: 0, scale: 0.8 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.2 }}
+                        viewport={{ once: true }}
                         className="inline-block"
                     >
                         <p className="text-primary text-lg md:text-xl font-bold uppercase tracking-[0.2em] border-b-2 border-primary/30 pb-2">
@@ -94,19 +123,20 @@ const Portfolio = () => {
                                 className="cursor-target"
                             >
                                 <TiltedCard className="w-full h-full">
-                                    <div 
+                                    <div
                                         className="relative group overflow-hidden rounded-[2.5rem] shadow-2xl border border-white/5 h-full cursor-pointer bg-gray-950/40"
                                         onClick={() => setSelectedIndex(index)}
                                     >
                                         <div className="absolute inset-0 bg-primary/5 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
-                                        
-                                        <img 
-                                            src={project.img} 
+
+                                        <img
+                                            src={project.img}
                                             alt={project.title}
                                             className="w-full h-[300px] md:h-[380px] object-cover transition-transform duration-700 group-hover:scale-105"
                                             loading="lazy"
+                                            decoding="async"
                                         />
-                                        
+
                                         {/* Insignia de Calidad */}
                                         <div className="absolute top-6 right-6 bg-black/70 backdrop-blur-md text-primary border border-primary/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest z-20 opacity-0 group-hover:opacity-100 transition-opacity">
                                             {project.category}
@@ -120,10 +150,11 @@ const Portfolio = () => {
 
                 {/* Botón de Ver Todo */}
                 {projects.length > 6 && (
-                    <motion.div 
+                    <motion.div
                         layout
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
                         className="mt-16 flex justify-center"
                     >
                         <button
@@ -139,10 +170,11 @@ const Portfolio = () => {
                 )}
 
                 {/* Mensaje motivador final */}
-                <motion.div 
+                <motion.div
                     layout
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
                     className="mt-12 text-center"
                 >
                     <p className="text-gray-500 italic text-lg">
@@ -162,7 +194,7 @@ const Portfolio = () => {
                         className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-10 bg-black/95 backdrop-blur-md cursor-zoom-out"
                     >
                         {/* Botón Cerrar */}
-                        <button 
+                        <button
                             className="absolute top-6 right-6 md:top-8 md:right-8 text-white hover:text-primary transition-all z-50 bg-black/60 p-3 rounded-full hover:scale-110 border border-white/10 hover:border-primary/50 shadow-lg cursor-pointer"
                             onClick={() => setSelectedIndex(null)}
                         >
@@ -170,7 +202,7 @@ const Portfolio = () => {
                         </button>
 
                         {/* Botón Anterior */}
-                        <button 
+                        <button
                             className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white hover:text-primary transition-all z-50 bg-black/60 p-3 rounded-full hover:scale-110 border border-white/10 hover:border-primary/50 shadow-lg cursor-pointer"
                             onClick={handlePrev}
                         >
@@ -192,7 +224,7 @@ const Portfolio = () => {
                         </div>
 
                         {/* Botón Siguiente */}
-                        <button 
+                        <button
                             className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white hover:text-primary transition-all z-50 bg-black/60 p-3 rounded-full hover:scale-110 border border-white/10 hover:border-primary/50 shadow-lg cursor-pointer"
                             onClick={handleNext}
                         >

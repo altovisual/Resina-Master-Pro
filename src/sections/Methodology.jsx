@@ -4,14 +4,18 @@ import { CheckCircle2 } from 'lucide-react';
 import GradientText from '../components/react-bits/GradientText';
 import Magnet from '../components/react-bits/Magnet';
 
-// Importación específica de las imágenes solicitadas por el usuario
-import photo30 from '../assets/portfolio/photo_30_2026-06-11_10-11-38.jpg';
-import photo1 from '../assets/portfolio/photo_1_2026-06-11_10-08-09.jpg';
-import photo23 from '../assets/portfolio/photo_23_2026-06-11_10-11-38.jpg';
+// Importación LAZY de imágenes — no carga al inicio, solo cuando el componente monta
+const imagesGlob = import.meta.glob('../assets/portfolio/*.jpg');
 
-// Importación dinámica de todas las imágenes en la carpeta de portfolio usando Vite glob
-const imagesGlob = import.meta.glob('../assets/portfolio/*.jpg', { eager: true });
-const portfolioImages = Object.keys(imagesGlob).map(path => imagesGlob[path].default);
+// Helper para cargar una imagen por nombre de archivo
+const loadImg = async (filename) => {
+    const key = Object.keys(imagesGlob).find(k => k.includes(filename));
+    if (!key) return null;
+    const mod = await imagesGlob[key]();
+    return mod.default;
+};
+// Cache de imágenes del slideshow
+let cachedSlideshow = null;
 
 const Methodology = () => {
     const points = [
@@ -25,16 +29,29 @@ const Methodology = () => {
     ];
 
     const [currentImg, setCurrentImg] = useState(0);
-    const slideshowImages = [
-        photo23,            // Primera imagen solicitada por el usuario
-        photo1,             // Segunda imagen solicitada por el usuario
-        portfolioImages[3], // Libreta/Cuaderno (Agenda)
-        portfolioImages[4], // Posavasos
-        portfolioImages[5], // Llaveros de letras
-        photo30,            // Imagen agregada a petición del usuario
-    ];
+    const [slideshowImages, setSlideshowImages] = useState([]);
+
+    // Cargar imágenes del slideshow de forma lazy al montar
+    useEffect(() => {
+        const load = async () => {
+            if (cachedSlideshow) { setSlideshowImages(cachedSlideshow); return; }
+            const [p23, p1, p3, p4, p5, p30] = await Promise.all([
+                loadImg('photo_23_2026-06-11_10-11-38'),
+                loadImg('photo_1_2026-06-11_10-08-09'),
+                loadImg('photo_3_'),
+                loadImg('photo_4_'),
+                loadImg('photo_5_'),
+                loadImg('photo_30_2026-06-11_10-11-38'),
+            ]);
+            const imgs = [p23, p1, p3, p4, p5, p30].filter(Boolean);
+            cachedSlideshow = imgs;
+            setSlideshowImages(imgs);
+        };
+        load();
+    }, []);
 
     useEffect(() => {
+        if (slideshowImages.length === 0) return;
         const interval = setInterval(() => {
             setCurrentImg((prev) => (prev + 1) % slideshowImages.length);
         }, 4000);

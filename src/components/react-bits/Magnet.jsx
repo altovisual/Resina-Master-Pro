@@ -5,7 +5,9 @@ const Magnet = ({ children, padding = 100, disabled = false, strength = 2, class
     const magnetRef = useRef(null);
 
     useEffect(() => {
-        if (disabled) {
+        // No registrar listener en dispositivos táctiles — innecesario y consume recursos
+        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+        if (disabled || isTouchDevice) {
             setPosition({ x: 0, y: 0 });
             return;
         }
