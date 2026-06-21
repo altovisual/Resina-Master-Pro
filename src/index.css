@@ -50,14 +50,24 @@ h1, h2, h3, .font-tanker {
   cursor: pointer;
 }
 
-/* Deshabilitar animaciones CSS pesadas en mobile (prefers-reduced-motion o coarse pointer) */
+/* ================================================================
+   MOBILE: deshabilitar TODAS las animaciones CSS
+   - MotionConfig en main.jsx ya cubre Framer Motion
+   - Este bloque cubre las animaciones CSS nativas (Tailwind animate-*)
+   ================================================================ */
 @media (pointer: coarse) {
-  .animate-gradient-slow {
-    animation: none !important;
-    background-position: 0% 50% !important;
+  /* Cancela cualquier animación CSS — incluyendo animate-gradient-slow,
+     animate-bounce, animate-spin, animate-ping, animate-pulse, etc. */
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
-  /* Deshabilitar el pulso del indicador de pago en Pricing */
-  .animate-pulse {
-    animation: none !important;
+
+  /* Excepción: los transitions de hover/tap en botones se mantienen
+     cortos pero no instantáneos para dar feedback táctil */
+  button, a, [role="button"] {
+    transition-duration: 150ms !important;
   }
 }
